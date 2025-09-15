@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('home') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
@@ -15,6 +15,11 @@
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Home') }}
                     </x-nav-link>
+                    @auth
+                    <x-nav-link :href="route('stores.index')" :active="request()->routeIs('stores.index')">
+                        {{ __('Stores') }}
+                    </x-nav-link>
+                    @endauth
                 </div>
             </div>
 
@@ -41,6 +46,9 @@
                         <x-slot name="content">
                             <x-dropdown-link :href="route('dashboard')">
                                 {{ __('Dashboard') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="route('stores.create')">
+                                {{ __('Create new Store') }}
                             </x-dropdown-link>
                             <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Profile') }}
