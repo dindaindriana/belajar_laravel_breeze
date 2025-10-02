@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Store;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreRequest;
+// use Illuminate\Support\Str;
+// use Illuminate\Support\Facades\Auth;
 
 class StoreController extends Controller
 {
@@ -12,7 +15,9 @@ class StoreController extends Controller
      */
     public function index()
     {
-        return view('stores.index');
+        return view('stores.index',[
+            'stores' => Store::latest()->get(),
+        ]);
     }
 
     /**
@@ -26,9 +31,17 @@ class StoreController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        dd($request->all());
+        $file = $request->file('logo');
+
+        $request->user()->stores()->create([
+            ...$request->validated(),
+            ...['logo'=> $file->store('images/stores', 'public')],
+        ]);
+
+        // return back();
+        return to_route('stores.index');
     }
 
     /**
@@ -36,7 +49,7 @@ class StoreController extends Controller
      */
     public function show(Store $store)
     {
-        //
+        
     }
 
     /**

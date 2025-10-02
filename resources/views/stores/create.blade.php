@@ -19,7 +19,29 @@
                 </x-card.description>
             </x-card.header>
             <x-card.content>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab rem ipsa cum cumque, dolor suscipit minus officia eligendi beatae dicta explicabo, iusto deleniti quod saepe, laborum accusantium rerum optio labore.
+                <form action="{{ route('stores.store') }}" method="post" enctype="multipart/form-data" class="[&>div]:mb-6" novalidate>
+
+                @csrf                                               
+                    <div>
+                        <x-input-label for="logo" class="sr-only" :value="__('Logo')"/>
+                        <input id="logo" name="logo" type="file"/>
+                        <x-input-error :messages="$errors->get('logo')" required/>
+                    </div>
+                    <div>
+                        <x-input-label for="name" :value="__('Name')"/>
+                        <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required/>
+                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                    </div>
+                    <div>
+                        <x-input-label for="description" :value="__('Description')" />
+                        <x-textarea id="description" class="block mt-1 w-full" name="description" required>{{ old('description') }}</x-textarea>
+                        <x-input-error :messages="$errors->get('description')" class="mt-2" />
+                    </div>
+
+                    <x-primary-button>
+                        Create
+                    </x-primary-button>
+                </form>
             </x-card.content>
         </x-card>
     </x-container>

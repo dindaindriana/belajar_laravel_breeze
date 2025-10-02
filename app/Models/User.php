@@ -49,6 +49,6 @@ class User extends Authenticatable
 
     public function stores() : HasMany
     {
-        return $this->hasMany(Store::class); // hasMany(Store::class) → relasi One-to-Many Artinya: satu model ini bisa punya banyak Store
+        return $this->hasMany(Store::class); // hasMany(Store::class) → relasi One-to-Many Artinya: satu model(satu user) ini bisa punya banyak Store
     }
 }
