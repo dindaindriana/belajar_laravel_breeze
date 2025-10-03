@@ -5,11 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Store;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreRequest;
+use Illuminate\Routing\Controllers;
+use Illuminate\Support\Facades\Gate;
+
 // use Illuminate\Support\Str;
 // use Illuminate\Support\Facades\Auth;
 
-class StoreController extends Controller
+class StoreController extends Controller 
 {
+
+    // public static function middleware()
+    // {
+    //     return [
+    //         new Controllers\Middleware('auth', except: ['index'])
+    //     ];
+    // } //cara ini bisa digunakan tapi akan lebih irbet krna middlerware ditulis didalam controller, cara lainnya bisa langsung dilakukan pada routing
+    
     /**
      * Display a listing of the resource.
      */
@@ -41,6 +52,10 @@ class StoreController extends Controller
      */
     public function store(StoreRequest $request)
     {
+        if(!auth()->check()){
+            return to_route('login');
+        }
+
         $file = $request->file('logo');
 
         $request->user()->stores()->create([
@@ -65,7 +80,9 @@ class StoreController extends Controller
      */
     public function edit(Request $request, Store $store)
     {
-        abort_if($request->user()->isNot($store->user), 401); //ini mencegah user mengedit toko orang lain, jika user tetap mencoba edit maka akan muncul 401 error
+        // Gate::authorize('update-store', $store); //ini manggil kalau pakai gate
+        Gate::authorize('update', $store); //ini manggil pakai policy
+
         return view('stores.form', [
             'store' => $store,
             'page_meta' => [

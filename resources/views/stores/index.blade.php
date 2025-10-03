@@ -14,7 +14,7 @@
                 <x-card class="p-6">
                     <div class="p-6 pb-0">
                         <img src="{{ \Illuminate\Support\Facades\Storage::url($store->logo) }}" alt="{{ $store->name }}"
-                        class="size-16 rounded-lg">
+                            class="size-16 rounded-lg">
                     </div>
                     <x-card.header>
                         <x-card.title>{{ $store->name }}</x-card.title>
@@ -22,11 +22,13 @@
                             {{ $store->description }}
                         </x-card.description>
 
-                        @if ($store->user_id === auth()->user()->id)
-                            <a href="{{ route('stores.edit', $store) }}" class="underline text-blue-600">
-                                Edit
-                            </a>
-                        @endif
+                        @auth
+                            @if ($store->user_id === auth()->user()->id)
+                                <a href="{{ route('stores.edit', $store) }}" class="underline text-blue-600">
+                                    Edit
+                                </a>
+                            @endif
+                        @endauth
                     </x-card.header>
                 </x-card>
             @endforeach

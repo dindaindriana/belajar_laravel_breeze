@@ -1,35 +1,30 @@
 <?php
 
-namespace App\Providers;
+namespace App\Policies;
 
-use App\Models\Store;
 use App\Models\User;
-use App\Policies\StorePolicy;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\ServiceProvider;
+use App\Models\Store;
+// use Illuminate\Auth\Access\Response;
 
-class AppServiceProvider extends ServiceProvider
+class StorePolicy
 {
-    /**
-     * Register any application services.
-     */
-    public function register(): void
+    public function update(User $user, Store $store): bool
     {
-        //
+        return $user->id === $store->user_id;
     }
 
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
-    {
-        // Gate::define('update-store', function (User $user, Store $store) {
-        //     return $user->id === $store->user_id;
-        // }); //ini kalau pakai gate
+    // public function update(User $user, Store $store): Response
+    // {
+    //     return $user->id === $store->user_id ? Response::allow() : Response::denyAsNotFound();
+    // } //ini versi customize return to 404 page
 
-        Gate::policy(Store::class, StorePolicy::class);
+    public function destroy(User $user, Store $store): bool
+    {
+        return $this->update($user, $store);
     }
+
 }
+
 
 // | - Authorization = Konsep izin (permission) di Laravel.
 // |   Authentication = memastikan SIAPA user (login),
