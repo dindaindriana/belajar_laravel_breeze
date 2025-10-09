@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\StoreStatus;
 use App\Observers\StoreObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,7 +17,15 @@ class Store extends Model
         'name',
         'slug',
         'description',
+        'status',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'status' => StoreStatus::class,
+        ];
+    }
 
     public function user(): BelongsTo //Setiap store pasti ada usernya
     {

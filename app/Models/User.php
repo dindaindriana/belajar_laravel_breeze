@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -51,4 +53,18 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Store::class); // hasMany(Store::class) → relasi One-to-Many Artinya: satu model(satu user) ini bisa punya banyak Store
     }
-}
+
+    public function roles(): BelongsToMany
+    {
+        // Relasi Many-to-Many dari User ke Role
+        // Artinya: satu user bisa punya banyak role
+        // Menggunakan tabel pivot 'user_role' yang sama
+        return $this->belongsToMany(Role::class, 'user_role');
+    }
+
+    public function assignRole(Role $role): Model
+    {
+        return $this->roles()->save($role);
+    }
+}   
+ 
