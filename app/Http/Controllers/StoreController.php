@@ -15,14 +15,25 @@ use Illuminate\Support\Facades\Storage;
 
 class StoreController extends Controller 
 {
+    public function list()
+    {
+        $stores = Store::query()
+                ->latest()
+                ->paginate(10);
 
-    // public static function middleware()
-    // {
-    //     return [
-    //         new Controllers\Middleware('auth', except: ['index'])
-    //     ];
-    // } //cara ini bisa digunakan tapi akan lebih irbet krna middlerware ditulis didalam controller, cara lainnya bisa langsung dilakukan pada routing
-    
+        return view('stores.list', [
+            'stores' => $stores,
+        ]);
+    }
+
+    public function approve(Store $store)
+    {
+        $store->status = StoreStatus::ACTIVE;
+        $store->save();
+
+        return back();
+    }
+
     /**
      * Display a listing of the resource.
      */
