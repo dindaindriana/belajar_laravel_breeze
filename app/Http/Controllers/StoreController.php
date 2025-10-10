@@ -122,7 +122,7 @@ class StoreController extends Controller
             // Hapus file logo lama dari storage
             Storage::delete($store->logo);
             // Hapus file logo lama dari storage
-            $file = $request->file('logo');
+            $file = $request->file('logo')->store('images/stores');
         } else {
             // Jika tidak upload logo, tetap pakai logo lama
             $file = $store->logo;
@@ -131,7 +131,7 @@ class StoreController extends Controller
         $store->update([
             'name' => $request->name,
             'description' => $request->description,
-            'logo' => $file->store('images/stores'),
+            'logo' => $file,
         ]);
 
         return to_route('stores.index');

@@ -3,14 +3,14 @@
     @slot('title', 'Verify Email') 
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-xl text-zinc-800 leading-tight">
             {{ __('Verify Email') }} (<span>{{ auth()->user()->email }}</span>)
         </h2>
     </x-slot>
 
     <x-container>
         <div class="bg-white shadow-sm border rounded-lg p-6">
-            <div class="mb-4 text-sm text-gray-600">
+            <div class="mb-4 text-sm text-zinc-600">
                 {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
             </div>
         
@@ -32,14 +32,14 @@
                 </form>
         
                 <div class="flex item-center gap-2">
-                    <a href="{{ route('profile.edit') }}" class="underline text-gray-600 hover:text-gray-900 text-md">
+                    <a href="{{ route('profile.edit') }}" class="underline text-zinc-600 hover:text-zinc-900 text-md">
                         Edit Profile
                     </a>
 
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
             
-                        <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <button type="submit" class="underline text-sm text-zinc-600 hover:text-zinc-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                             {{ __('Log Out') }}
                         </button>
                     </form>
