@@ -98,7 +98,6 @@ class StoreController extends Controller
      */
     public function edit(Request $request, Store $store)
     {
-        // Gate::authorize('update-store', $store); //ini manggil kalau pakai gate
         Gate::authorize('update', $store); //ini manggil pakai policy
 
         return view('stores.form', [

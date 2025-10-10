@@ -23,10 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Gate::define('update-store', function (User $user, Store $store) {
-        //     return $user->id === $store->user_id;
-        // }); //ini kalau pakai gate
-
         Gate::policy(Store::class, StorePolicy::class);
+
+        Gate::define('isPartner', fn (User $user) => $user->isAdmin() || $user->isPartner());
     }
 }
