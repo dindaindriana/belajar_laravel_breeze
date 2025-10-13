@@ -19,7 +19,7 @@ class StoreController extends Controller
     {
         $stores = Store::query()
                 ->latest()
-                ->paginate(10);
+                ->paginate(8);
 
         return view('stores.list', [
             'stores' => $stores,
