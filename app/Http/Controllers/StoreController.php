@@ -18,11 +18,16 @@ class StoreController extends Controller
     public function list()
     {
         $stores = Store::query()
+                // ->with('user', fn ($query) => $query->select(['id', 'name'])) //cara ini bisa juga
+                ->with('user:id,name') //ini bisa juga dan lebih singkat
                 ->latest()
                 ->paginate(8);
 
+        // return $stores;
+
         return view('stores.list', [
             'stores' => $stores,
+            'isAdmin' => auth()->user()->isAdmin(), //seperti ini aklau dituliskan di contorller, yang awalnya kit atuliskan di view list.blade.php
         ]);
     }
 

@@ -9,9 +9,10 @@
     </x-slot>
 
     <x-container>
+        <!-- @php $isAdmin = auth()->user()->isAdmin(); @endphp //ini bisa dituliskan disni, dan juga bisa ditulisakan di storecontroller agar lebih clean -->
         <div class="grid grid-cols-4 gap-6">
             @foreach ($stores as $store)
-                <x-stores.item :$store/>
+                <x-stores.item :$isAdmin :$store/>
             @endforeach
         </div>
 

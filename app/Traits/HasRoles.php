@@ -18,6 +18,11 @@ trait HasRoles
         return $this->roles()->save($role);
     }
 
+    public function hasRole(string $role): bool
+    {
+        return $this->roles()->where('name', $role)->exists();
+    }
+    
     public function isAdmin(): bool
     {
         return $this->hasRole('admin');
@@ -28,8 +33,4 @@ trait HasRoles
         return $this->hasRole('partner');
     }
 
-    public function hasRole(string $role): bool
-    {
-        return $this->roles()->where('name', $role)->exists();
-    }
 }
