@@ -18,8 +18,8 @@ class StoreController extends Controller
     public function list()
     {
         $stores = Store::query()
-                // ->with('user', fn ($query) => $query->select(['id', 'name'])) //cara ini bisa juga
-                ->with('user:id,name') //ini bisa juga dan lebih singkat
+                ->with('user:id,name') 
+                ->withCount('products')
                 ->latest()
                 ->paginate(8);
 
@@ -27,7 +27,7 @@ class StoreController extends Controller
 
         return view('stores.list', [
             'stores' => $stores,
-            'isAdmin' => auth()->user()->isAdmin(), //seperti ini aklau dituliskan di contorller, yang awalnya kit atuliskan di view list.blade.php
+            'isAdmin' => auth()->user()->isAdmin(), 
         ]);
     }
 
@@ -109,6 +109,7 @@ class StoreController extends Controller
     {
         return view('stores.show', [
             'store' => $store->loadCount('products'),
+            'products' => $store->products()->latest()->paginate(12),
         ]);
     }
 
